@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.GoodStudy" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/tomato_orange</item>
+        <!-- 单色填充背景 -->
+<!--        <item name="android:windowSplashScreenBackground">#F18C1A</item>-->
+        <!-- 设置启动画面在关闭之前显示的时长。最长时间为 1000 毫秒 -->
+        <item name="android:windowSplashScreenAnimationDuration">1000</item>
+    </style>
+</resources>

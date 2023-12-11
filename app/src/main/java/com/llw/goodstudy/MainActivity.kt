@@ -1,0 +1,69 @@
+package com.llw.goodstudy
+
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.llw.goodstudy.pages.LoginPage
+import com.llw.goodstudy.pages.RegisterPage
+import com.llw.goodstudy.pages.SplashPage
+import com.llw.goodstudy.ui.theme.GoodStudyTheme
+import com.llw.goodstudy.utils.Constant.PAGE_LOGIN
+import com.llw.goodstudy.utils.Constant.PAGE_REGISTER
+import com.llw.goodstudy.utils.Constant.PAGE_SPLASH
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            GoodStudyTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
+                    Box {
+                        AppLunch()
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun AppLunch() {
+
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = PAGE_SPLASH) {
+        composable(PAGE_SPLASH) { SplashPage(navController) }
+        composable(PAGE_LOGIN) { LoginPage(navController) }
+        composable(PAGE_REGISTER) { RegisterPage(navController) }
+    }
+
+//    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+//
+//        LoginPage(navController)
+//    } else {
+//        SplashPage(navController)
+//    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    GoodStudyTheme {
+        App()
+    }
+}
