@@ -1,9 +1,13 @@
 package com.llw.goodstudy
 
 import android.os.Bundle
-import android.widget.Toast
+
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -14,6 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.llw.goodstudy.pages.LoginPage
 import com.llw.goodstudy.pages.RegisterPage
 import com.llw.goodstudy.pages.SplashPage
@@ -41,23 +47,44 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AppLunch() {
 
-    val navController = rememberNavController()
+    val navController = rememberAnimatedNavController()
 
-    NavHost(navController = navController, startDestination = PAGE_SPLASH) {
+    AnimatedNavHost(
+        navController = navController,
+        startDestination = PAGE_SPLASH,
+        enterTransition = {
+            slideInHorizontally(
+                initialOffsetX = { fullWidth -> fullWidth },
+                animationSpec = tween(500)
+            )
+        },
+        exitTransition = {
+            slideOutHorizontally(
+                targetOffsetX = { fullWidth -> -fullWidth },
+                animationSpec = tween(500)
+            )
+        },
+        popEnterTransition = {
+            slideInHorizontally(
+                initialOffsetX = { fullWidth -> -fullWidth },
+                animationSpec = tween(500)
+            )
+        },
+        popExitTransition = {
+            slideOutHorizontally(
+                targetOffsetX = { fullWidth -> fullWidth },
+                animationSpec = tween(500)
+            )
+        }
+    ) {
         composable(PAGE_SPLASH) { SplashPage(navController) }
         composable(PAGE_LOGIN) { LoginPage(navController) }
         composable(PAGE_REGISTER) { RegisterPage(navController) }
     }
-
-//    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-//
-//        LoginPage(navController)
-//    } else {
-//        SplashPage(navController)
-//    }
 }
 
 @Preview(showBackground = true)

@@ -1,5 +1,7 @@
 package com.llw.goodstudy.pages
 
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -16,6 +18,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.llw.goodstudy.R
 import com.llw.goodstudy.utils.EasyUtils
 
@@ -36,6 +39,7 @@ fun RegisterPage(navController: NavHostController) {
 
     Column(
         modifier = Modifier
+            .background(colorResource(id = R.color.white))
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Center
@@ -150,3 +154,14 @@ fun RegisterPage(navController: NavHostController) {
         }
     }
 }
+
+/**
+ * 预览
+ */
+@OptIn(ExperimentalAnimationApi::class)
+@Preview
+@Composable
+fun PreviewRegisterPage() {
+    RegisterPage(navController = rememberAnimatedNavController())
+}
+
